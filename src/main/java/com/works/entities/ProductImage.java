@@ -7,13 +7,12 @@ import java.nio.file.Files;
 
 @Entity
 @Data
-public class Photo {
+public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long iid;
+    private Integer iid;
     // product id
-    private Long pid;
+    private Integer pid;
     @Lob
     private String file;
-
 }
