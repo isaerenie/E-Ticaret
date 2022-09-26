@@ -34,7 +34,7 @@ public class ProductImageService {
         try {
 
             hm.put(ERest.status, true);
-            hm.put(ERest.result,  pRepo.findByPidEquals(pid));
+            hm.put(ERest.images,  pRepo.findByPidEquals(pid));
         } catch (Exception e) {
             hm.put(ERest.status, false);
             hm.put(ERest.message, "Error:"+e);
