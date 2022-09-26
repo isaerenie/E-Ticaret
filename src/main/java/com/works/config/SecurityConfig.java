@@ -45,8 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/manager/**").hasRole("manager")
-                .antMatchers("/teacher/**").hasRole("teacher")
+                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/category/**").hasRole("admin")
+                .antMatchers("/product/**").hasAnyAuthority("admin", "customer")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class );
