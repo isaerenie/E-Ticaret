@@ -1,7 +1,6 @@
 package com.works.restcontrollers;
 
 import com.works.entities.Category;
-import com.works.entities.ProCutJoin;
 import com.works.entities.Product;
 import com.works.services.ProductService;
 import org.springframework.http.ResponseEntity;

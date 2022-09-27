@@ -43,8 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
                 .antMatchers("/category/**").hasRole("admin")
                 .antMatchers("/product/**").hasAnyRole("admin", "customer")
                 .and()

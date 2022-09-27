@@ -7,16 +7,14 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class ProCutJoin {
+public class ProCutImageJoin {
     @Id
     private Integer pid;
-    private Integer cid;
-    private Integer fid;
     private Integer price;
     private String productTitle;
     private String categoryTitle;
     private String description;
-    private String photoUrl;
     private boolean onSale;
+    private String file;
 }
 

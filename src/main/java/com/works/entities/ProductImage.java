@@ -3,7 +3,6 @@ package com.works.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.nio.file.Files;
 
 @Entity
 @Data

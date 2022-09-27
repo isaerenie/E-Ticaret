@@ -1,6 +1,6 @@
 package com.works.services;
 
-import com.works.entities.ProCutJoin;
+import com.works.entities.ProCutImageJoin;
 import com.works.entities.Product;
 import com.works.repositories.ProCutJoinRepository;
 import com.works.repositories.ProductRepository;
@@ -40,7 +40,7 @@ public class ProductService {
     public ResponseEntity list() {
         Map<ERest, Object> hm = new LinkedHashMap<>();
         try {
-            List<ProCutJoin> ls = proCutJoinRepository.allProduct();
+            List<ProCutImageJoin> ls = proCutJoinRepository.allProduct();
             hm.put(ERest.status, true);
             hm.put(ERest.result, ls);
         } catch (Exception e) {
