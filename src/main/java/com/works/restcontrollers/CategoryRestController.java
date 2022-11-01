@@ -19,15 +19,15 @@ public class CategoryRestController {
         return categoryService.save(category);
     }
     @GetMapping("/list")
-    public ResponseEntity save(){
+    public ResponseEntity list(){
         return categoryService.list();
     }
     @PutMapping("/update")
     public ResponseEntity update(@RequestBody Category category){
         return categoryService.update(category);
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity delete(@RequestParam int id){
-        return categoryService.delete(id);
+    @DeleteMapping("/delete/{cid}")
+    public ResponseEntity delete(@PathVariable int cid){
+        return categoryService.delete(cid);
     }
 }

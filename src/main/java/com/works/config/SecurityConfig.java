@@ -43,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("/category/**").hasRole("admin")
+                .antMatchers("/product/list").permitAll()
+                .antMatchers("/category/list").permitAll()
+                .antMatchers("/category/**").hasAnyRole("admin", "customer")
                 .antMatchers("/product/**").hasAnyRole("admin", "customer")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -60,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
             "/auth",
+            "/list",
             "/register",
             "/v2/api-docs",
             "/swagger-resources",

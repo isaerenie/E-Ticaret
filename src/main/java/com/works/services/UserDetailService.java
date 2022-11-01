@@ -1,8 +1,10 @@
 package com.works.services;
-
+import com.works.dto.UserDto;
 import com.works.entities.Role;
 import com.works.entities.User;
+import com.works.entities.UserRol;
 import com.works.repositories.UserRepository;
+import com.works.repositories.UserRolRepository;
 import com.works.utils.JwtUtil;
 import com.works.utils.ERest;
 import org.springframework.context.annotation.Bean;
@@ -31,10 +33,14 @@ public class UserDetailService implements UserDetailsService {
     final UserRepository userRepository;
     final JwtUtil jwtUtil;
     final AuthenticationManager authenticationManager;
-    public UserDetailService(UserRepository userRepository, JwtUtil jwtUtil, @Lazy AuthenticationManager authenticationManager) {
+final UserRolRepository userRolRepository;
+
+    public UserDetailService(UserRepository userRepository, JwtUtil jwtUtil, @Lazy AuthenticationManager authenticationManager, UserRolRepository userRolRepository) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
+
+        this.userRolRepository = userRolRepository;
     }
 
     @Override
@@ -70,10 +76,11 @@ public class UserDetailService implements UserDetailsService {
         Optional<User> optionalJWTUser = userRepository.findByEmailEqualsIgnoreCase(jwtUser.getEmail());
         Map<ERest, Object> hm = new LinkedHashMap();
         if ( !optionalJWTUser.isPresent() ) {
-            jwtUser.setPassword(encoder().encode( jwtUser.getPassword() )  );
+            jwtUser.setPassword(encoder().encode( jwtUser.getPassword()));
             User user = userRepository.save(jwtUser);
             hm.put(ERest.status, true);
             hm.put(ERest.result, user);
+
             return new ResponseEntity( hm , HttpStatus.OK);
         }else {
             hm.put(ERest.status, false);
@@ -110,4 +117,18 @@ public class UserDetailService implements UserDetailsService {
         }
     }
 
+
+    public ResponseEntity list() {
+        Map<ERest, Object> hm = new LinkedHashMap<>();
+        try {
+           List<User> ls =userRepository.findAll();
+            hm.put(ERest.status, true);
+            hm.put(ERest.result,ls);
+
+        } catch (Exception e) {
+            hm.put(ERest.status, false);
+            hm.put(ERest.message, "Error:"+e);
+        }
+        return new ResponseEntity(hm, HttpStatus.OK);
+    }
 }

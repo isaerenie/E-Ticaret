@@ -1,6 +1,7 @@
 package com.works.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,10 +18,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotEmpty
     @NotNull
-
     private String firstName;
     private String lastName;
     private String email;
@@ -36,6 +35,8 @@ public class User {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
+
+    //@JsonIgnore
     private List<Role> roles;
 
 

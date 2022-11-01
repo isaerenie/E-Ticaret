@@ -3,11 +3,9 @@ package com.works.restcontrollers;
 import com.works.entities.User;
 import com.works.props.JWTLogin;
 import com.works.services.UserDetailService;
+import lombok.Getter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -27,5 +25,9 @@ public class UserRestController {
     public ResponseEntity auth(@RequestBody JWTLogin jwtLogin) {
         return service.auth(jwtLogin);
     }
-
+    @GetMapping("/list")
+    public ResponseEntity list() {
+        System.out.println("hello");
+        return service.list();
+    }
 }

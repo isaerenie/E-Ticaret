@@ -1,5 +1,6 @@
 package com.works.services;
 
+import com.works.entities.Category;
 import com.works.entities.ProCutImageJoin;
 import com.works.entities.Product;
 import com.works.repositories.ProCutJoinRepository;
@@ -50,6 +51,19 @@ public class ProductService {
         return new ResponseEntity(hm, HttpStatus.OK);
     }
 
+    public ResponseEntity list1() {
+        Map<ERest, Object> hm = new LinkedHashMap<>();
+        try {
+            List<Product> ls = productRepository.findAll();
+            hm.put(ERest.status, true);
+            hm.put(ERest.result, ls);
+        } catch (Exception e) {
+            hm.put(ERest.status, false);
+            hm.put(ERest.error, e);
+        }
+        return new ResponseEntity(hm, HttpStatus.OK);
+    }
+
     public ResponseEntity update(Product product) {
         Map<ERest, Object> hm = new LinkedHashMap<>();
         Optional<Product> optionalProduct = productRepository.findById(product.getPid());
@@ -69,18 +83,12 @@ public class ProductService {
         return new ResponseEntity(hm, HttpStatus.OK);
     }
 
-    public ResponseEntity delete(int id) {
+    public ResponseEntity delete(int pid) {
         Map<ERest, Object> hm = new LinkedHashMap<>();
-        Optional<Product> optionalProduct = productRepository.findById(id);
         try {
-            if (optionalProduct.isPresent()) {
-                productRepository.deleteById(id);
-                hm.put(ERest.status, true);
-                hm.put(ERest.message, "Ürün başarı ile slindi");
-            } else {
-                hm.put(ERest.status, false);
-                hm.put(ERest.message, "Ürün bulunamadı");
-            }
+            productRepository.deleteById(pid);
+            hm.put(ERest.status, true);
+            hm.put(ERest.message, "Ürün başarı ile slindi");
 
         } catch (Exception e) {
             hm.put(ERest.status, false);
@@ -88,17 +96,38 @@ public class ProductService {
         }
         return new ResponseEntity(hm, HttpStatus.OK);
     }
+    public ResponseEntity getProductById(int pid) {
+        Map<ERest, Object> hm = new LinkedHashMap<>();
+        try {
+       Product product=proCutJoinRepository.getProductById(pid);
+            hm.put(ERest.status, true);
+            hm.put(ERest.result, product);
 
+        } catch (Exception e) {
+            hm.put(ERest.status, false);
+            hm.put(ERest.error, e);
+        }
+        return new ResponseEntity(hm, HttpStatus.OK);
+    }
     public ResponseEntity search(String q) {
         Map<ERest, Object> hm = new LinkedHashMap<>();
         hm.put(ERest.status, true);
-        hm.put(ERest.result, proCutJoinRepository.searchProduct("%" + q + "%" ));
+        hm.put(ERest.result, proCutJoinRepository.searchProduct("%" + q + "%"));
         return new ResponseEntity(hm, HttpStatus.OK);
     }
-    public ResponseEntity page(int start ) {
+
+    public ResponseEntity page(int start) {
         Map<ERest, Object> hm = new LinkedHashMap<>();
         hm.put(ERest.status, true);
-        hm.put(ERest.result, proCutJoinRepository.pageProduct(start*5,5));
+        hm.put(ERest.result, proCutJoinRepository.pageProduct(start * 5, 5));
+        return new ResponseEntity(hm, HttpStatus.OK);
+    }
+
+    public ResponseEntity getcatprolist(int cid) {
+        Map<ERest, Object> hm = new LinkedHashMap<>();
+        List<ProCutImageJoin> ls = proCutJoinRepository.findCatPro(cid);
+        hm.put(ERest.status, true);
+        hm.put(ERest.result, ls);
         return new ResponseEntity(hm, HttpStatus.OK);
     }
 }
