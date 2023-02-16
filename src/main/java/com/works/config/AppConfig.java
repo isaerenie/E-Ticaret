@@ -19,9 +19,11 @@ public class AppConfig {
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
     }
+//update
 
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
+
     }
 
     private List<SecurityReference> defaultAuth() {

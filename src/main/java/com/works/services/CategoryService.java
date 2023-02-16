@@ -33,6 +33,7 @@ public class CategoryService {
     }
 
     public ResponseEntity list() {
+        System.out.println("list");
         Map<ERest, Object> hm = new LinkedHashMap<>();
         try {
             List<Category> ls = categoryRepository.findAll();
